@@ -12,48 +12,49 @@
 3. Instalar Angular globalmente, con el siguiente comando
 
     ```bash
-    $ npm install -g @angular/cli@v13-lts
+    $ npm install -g @angular/cli
     ```
 
 4. Creación del proyecto, con el siguiente comando
 
     ```bash
-    $ ng new dogtorvet
+    $ ng new dogtorpet
     ```
 
     Seleccionando las siguientes opciones:
     ```
     - Would you like to add Angular routing? Yes
-    - Which stylesheet format would you like to use? SCSS
+    - Which stylesheet format would you like to use? CSS
     ```
 
 5. Acceder a la carpeta nueva llamada dogtorvet
 
     ```bash
-    $ cd dogtorvet
+    $ cd dogtorpet
     ```
 
 6. Instalar dependencias del proyecto
 
     ```bash
-    $ ng add mdb-angular-ui-kit
+    $ ng add @ng-bootstrap/ng-bootstrap
     ```
-    Seleccionando las siguientes opciones:
-    ```
-    - Would you like to proceed? Yes
-    - Import all MDB modules? Yes
-    - Set up Roboto Font? No
-    - Set up Angular browser animations? Yes
-    - Set up Font Awesome? Yes
-    - Set up Charts? No
+7. Agregar las hojas de estilo para fuentes en el archivo styles.css:
 
-7. Para levantar el seridor de Angular para desarrollo, ejecutar el siguiente comando desde la carpeta `empleados` del proyecto
+    ```css
+    @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css');
+	@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;700&display=swap');
+
+	body {
+	  font-family: 'Sora', Arial, Helvetica, sans-serif;
+	}
+    ```
+8. Para levantar el seridor de Angular para desarrollo, ejecutar el siguiente comando desde la carpeta `empleados` del proyecto
 
     ```bash
     $ ng serve
     ```
 
-8. Abrir la siguiente url en el browser
+9. Abrir la siguiente url en el browser
     [http://localhost:4200/](http://localhost:4200/)
 
 # Crear componentes en el proyecto
@@ -167,14 +168,15 @@
 15. Ejecutar el siguiente comando para crear el filtro de seguridad (guardas)
 
     ```bash
-    $ ng g guard guards/login --skip-tests
+    $ ng g guard util/login --skip-tests
     ```
     Seleccionando las siguientes opciones con la barra espaciadora y dar enter para finalizar
+    ```bash
     >(*) CanActivate
      ( ) CanActivateChild
      ( ) CanDeactivate
      ( ) CanLoad
-
+    ```
 16. Modifica las rutas dentro el archivo `app-routing.module.ts`, el cual debe quedar similar a lo siguiente,
 
     ```typescript
@@ -191,4 +193,21 @@
     ];
 
     //...
+    ```
+17. Ejecutar el siguiente comando para crear el interceptor http para el JWT
+
+    ```bash
+    $ ng g interceptor util/jwt --skip-tests
+    ```
+
+18. Modificar el archivo app.module.ts, después de la sección imports agregar la sección providers:
+
+    ```typescript
+    imports: [
+        //...
+    ],
+    providers: [
+        { provide:HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi:true}
+    ],
+    bootstrap: [AppComponent]
     ```
